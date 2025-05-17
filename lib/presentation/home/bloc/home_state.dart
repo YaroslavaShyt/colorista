@@ -1,3 +1,4 @@
+import 'package:colorista/domain/colors/app_color/iapp_color.dart';
 import 'package:equatable/equatable.dart';
 
 enum HomeStatus {
@@ -8,12 +9,12 @@ enum HomeStatus {
 class HomeState extends Equatable {
   const HomeState({
     this.status = HomeStatus.initial,
-    this.color = 00000,
+    this.color,
   });
 
   HomeState copyWith({
     HomeStatus? status,
-    int? color,
+    IAppColor? color,
   }) {
     return HomeState(
       status: status ?? this.status,
@@ -21,7 +22,7 @@ class HomeState extends Equatable {
     );
   }
 
-  final int color;
+  final IAppColor? color;
   final HomeStatus status;
 
   @override

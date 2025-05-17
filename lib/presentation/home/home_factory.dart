@@ -1,5 +1,5 @@
 import 'package:colorista/core/service_locator.dart';
-import 'package:colorista/domain/handlers/icolor_handler.dart';
+import 'package:colorista/domain/services/icolors_service.dart';
 import 'package:colorista/presentation/home/bloc/home_cubit.dart';
 import 'package:colorista/presentation/home/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class HomeFactory extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<HomeCubit>(
       create: (_) => HomeCubit(
-        colorHandler: sl.get<IColorHandler>(),
+        colorService: sl.get<IColorService>(),
       ),
       child: Builder(
         builder: (context) {

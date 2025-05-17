@@ -1,18 +1,22 @@
-import 'package:colorista/domain/handlers/icolor_handler.dart';
+import 'package:colorista/domain/colors/app_color/iapp_color.dart';
+import 'package:colorista/domain/services/icolors_service.dart';
 import 'package:colorista/presentation/home/bloc/home_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit({
-    required IColorHandler colorHandler,
-  })  : _colorHandler = colorHandler,
+    required IColorService colorService,
+  })  : _colorService = colorService,
         super(const HomeState());
 
-  final IColorHandler _colorHandler;
+  final IColorService _colorService;
 
-  void onScreenTap() {
+  final int defaultColor = 0xff;
+
+  Future<void> onScreenTap() async {
     try {
-      final int color = _getNewColor();
+      print("tap");
+      final IAppColor color = await _getNewColor();
 
       emit(state.copyWith(color: color));
     } catch (error) {
@@ -20,12 +24,8 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  int _getNewColor() {
-    int newColor = _colorHandler.generateColor();
-    while (newColor == state.color) {
-      newColor = _colorHandler.generateColor();
-    }
-
+  Future<IAppColor> _getNewColor() async {
+    IAppColor newColor = await _colorService.generateColor();
     return newColor;
   }
 

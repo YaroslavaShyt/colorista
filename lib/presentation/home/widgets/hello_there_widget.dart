@@ -5,6 +5,11 @@ class HelloThereWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Hello there");
+    return const Text(
+      "Hello there",
+      style: TextStyle(
+        fontSize: 20,
+      ),
+    );
   }
 }

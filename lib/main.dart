@@ -13,5 +13,5 @@ void main() {
 
   ServiceLocator().init();
 
-  runApp(const MainApp());
+  runApp(App());
 }

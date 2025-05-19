@@ -3,15 +3,17 @@ import 'package:colorista/data/colors/app_color/app_color.dart';
 import 'package:colorista/data/networking/endpoints.dart';
 import 'package:colorista/domain/colors/app_color/iapp_color.dart';
 import 'package:colorista/domain/colors/icolors_repository.dart';
-import 'package:colorista/domain/networking/inetworking_client.dart';
+import 'package:colorista/domain/networking/inetwork_client.dart';
 import 'package:dio/dio.dart';
 
+/// Repository to fetch info about colors
 class ColorsRepository implements IColorsRepository {
+  final INetworkClient _networkClient;
+
+  /// Required [INetworkClient]
   ColorsRepository({
     required INetworkClient networkClient,
   }) : _networkClient = networkClient;
-
-  final INetworkClient _networkClient;
 
   @override
   Future<IAppColor?> getColorInfo(int r, int g, int b) async {

@@ -1,9 +1,23 @@
+import 'package:colorista/core/utils/string_extention.dart';
 import 'package:colorista/domain/colors/app_color/iapp_color.dart';
-import 'package:equatable/equatable.dart';
 
 part 'app_color_keys.dart';
 
-class AppColor extends Equatable implements IAppColor {
+/// Implementation of [IAppColor] model
+class AppColor implements IAppColor {
+  @override
+  final int hexColor;
+  @override
+  final List<int> rgbColor;
+  @override
+  final String name;
+  @override
+  final List<(int, List<int>)> colorTriad;
+  @override
+  final List<int> complementaryColor;
+
+  /// Required [hexColor], [rgbColor], [name],
+  /// [colorTriad], [complementaryColor]
   AppColor({
     required this.hexColor,
     required this.rgbColor,
@@ -12,24 +26,21 @@ class AppColor extends Equatable implements IAppColor {
     required this.complementaryColor,
   });
 
+  /// Parse json data and return [IAppColor] object
   factory AppColor.fromJson(Map<String, dynamic> data) {
     final String rgbString =
-        data[AppColorKeys.rgb][AppColorKeys.value] as String;
-    final List<int> rgb = rgbString
-        .replaceAll(RegExp(r'[^\d,]'), '')
-        .split(',')
-        .map(int.parse)
-        .toList();
+        (data[AppColorKeys.rgb] as Map)[AppColorKeys.value] as String;
+    final List<int> rgb = rgbString.parseRGB();
+    final int hex =
+        ((data[AppColorKeys.hex] as Map)[AppColorKeys.value] as String)
+            .parseHex();
+    final String name =
+        (data[AppColorKeys.name] as Map)[AppColorKeys.value] as String;
 
     return AppColor(
-      hexColor: int.parse(
-            (data[AppColorKeys.hex][AppColorKeys.value] as String)
-                .replaceFirst('#', ''),
-            radix: 16,
-          ) +
-          0xFF000000,
+      hexColor: hex,
       rgbColor: rgb,
-      name: data[AppColorKeys.name][AppColorKeys.value] as String,
+      name: name,
       colorTriad: [],
       complementaryColor: [],
     );
@@ -51,18 +62,4 @@ class AppColor extends Equatable implements IAppColor {
       complementaryColor: complementaryColor ?? this.complementaryColor,
     );
   }
-
-  @override
-  final int hexColor;
-  @override
-  final List<int> rgbColor;
-  @override
-  final String name;
-  @override
-  final List<(int, List<int>)> colorTriad;
-  @override
-  final List<int> complementaryColor;
-
-  @override
-  List<Object?> get props => [hexColor, rgbColor, name];
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// Widget to display color property
 class ColorPropertyWidget extends StatelessWidget {
+  /// Required [propertyName], [propertyValue]
   const ColorPropertyWidget({
     required this.propertyName,
     required this.propertyValue,
@@ -9,24 +11,27 @@ class ColorPropertyWidget extends StatelessWidget {
     super.key,
   });
 
+  /// Property name
   final String propertyName;
+
+  /// Property value
   final String propertyValue;
+
+  /// Font size (optional)
   final double fontSize;
-  final List<int>? textColor;
+
+  /// Text color (optional)
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
-    final Color? color = textColor != null
-        ? Color.fromRGBO(textColor![0], textColor![1], textColor![2], 1)
-        : null;
-
     return Padding(
       padding: const EdgeInsetsDirectional.only(bottom: 8.0),
       child: RichText(
         text: TextSpan(
           style: TextStyle(
             fontSize: fontSize,
-            color: color ?? Colors.black,
+            color: textColor ?? Colors.black,
           ),
           children: [
             TextSpan(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// Widget to display "Hello there" text
 class HelloThereWidget extends StatelessWidget {
+  /// Constructor
   const HelloThereWidget({super.key});
 
   @override

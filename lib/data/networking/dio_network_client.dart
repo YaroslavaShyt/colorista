@@ -1,16 +1,18 @@
 import 'dart:async';
 
+import 'package:colorista/domain/networking/inetwork_client.dart';
 import 'package:colorista/domain/networking/inetwork_client_config.dart';
-import 'package:colorista/domain/networking/inetworking_client.dart';
 import 'package:dio/dio.dart';
 
+/// [Dio] network client implementation
 class DioNetworkClient implements INetworkClient {
-  late final Dio _dio;
+  final Dio _dio;
 
-  @override
-  void init({required INetworkClientConfig config}) {
-    _dio = Dio(config.configuration as BaseOptions?);
-
+  /// Initializes the networking client with the given configuration
+  /// The [config] parameter contains setup details (base URL, headers, etc)
+  DioNetworkClient({
+    required INetworkClientConfig config,
+  }) : _dio = Dio(config.configuration as BaseOptions?) {
     _dio.transformer = BackgroundTransformer();
   }
 

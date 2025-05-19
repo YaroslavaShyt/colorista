@@ -2,6 +2,7 @@ import 'package:colorista/data/networking/endpoints.dart';
 import 'package:colorista/domain/networking/inetwork_client_config.dart';
 import 'package:dio/dio.dart';
 
+/// Configuration for [Dio] network client implementation
 class DioConfiguration implements INetworkClientConfig {
   @override
   BaseOptions get configuration {

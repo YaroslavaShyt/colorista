@@ -1,16 +1,43 @@
-import 'package:colorista/presentation/home/bloc/home_state.dart';
+import 'package:colorista/core/constants/color_constants.dart';
+import 'package:colorista/domain/colors/app_color/iapp_color.dart';
 import 'package:colorista/presentation/home/widgets/color_info_widget.dart';
 import 'package:colorista/presentation/home/widgets/color_triad_widget.dart';
 import 'package:colorista/presentation/home/widgets/hello_there_widget.dart';
 import 'package:flutter/material.dart';
 
+/// Widget to display color info
 class MainContentWidget extends StatelessWidget {
+  /// Required [color]
   const MainContentWidget({
-    required this.state,
+    required this.color,
     super.key,
   });
 
-  final HomeState state;
+  /// Required [color]
+  final IAppColor? color;
+
+  /// Color name
+  String get colorName => color?.name ?? '';
+
+  /// Color hex representation
+  String get hexValue => color?.hexColor.toString() ?? '';
+
+  /// Color rgb representation
+  String get rgbValue => color?.rgbColor.toString() ?? '';
+
+  /// Complementary colors
+  List<int> get complementaryColors => color?.complementaryColor ?? [0, 0, 0];
+
+  /// First color of the triad
+  int get firstTriadColor =>
+      color?.colorTriad.first.$1 ?? ColorConstants.defaultHexColor;
+
+  /// Second color of the triad
+  int get secondTriadColor =>
+      color?.colorTriad[1].$1 ?? ColorConstants.defaultHexColor;
+
+  /// Third color of the triad
+  int get thirdTriadColor => color?.hexColor ?? ColorConstants.defaultHexColor;
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +47,17 @@ class MainContentWidget extends StatelessWidget {
       children: [
         const HelloThereWidget(),
         ColorInfoWidget(
-          colorName: state.color?.name ?? '',
-          complementary: state.color?.complementaryColor,
-          hex: state.color?.hexColor.toString() ?? '',
-          rgb: state.color?.rgbColor.toString() ?? '',
+          colorName: colorName,
+          complementary: complementaryColors,
+          hex: hexValue,
+          rgb: rgbValue,
         ),
         ColorTriadWidget(
-          complementary: state.color?.complementaryColor ?? [],
-          color1: state.color?.colorTriad[0].$1 ?? 0xffffff,
-          color2: state.color?.colorTriad[1].$1 ?? 0xffffff,
-          color3: state.color?.hexColor ?? 0xffffff,
-        )
+          complementary: complementaryColors,
+          color1: firstTriadColor,
+          color2: secondTriadColor,
+          color3: thirdTriadColor,
+        ),
       ],
     );
   }

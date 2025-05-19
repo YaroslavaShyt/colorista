@@ -1,7 +1,26 @@
+import 'package:colorista/core/utils/list_extention.dart';
+import 'package:colorista/presentation/home/widgets/color_container_widget.dart';
 import 'package:colorista/presentation/home/widgets/color_property_widget.dart';
 import 'package:flutter/material.dart';
 
+/// Widget to display color properties
 class ColorInfoWidget extends StatelessWidget {
+  /// Color name
+  final String colorName;
+
+  /// Hex representation of color
+  final String hex;
+
+  /// List of complementary colors
+  final List<int>? complementary;
+
+  /// Red-Green-Blue representation of the color
+  final String rgb;
+
+  /// Convert [List] rgb to [Color]
+  Color get complementaryColor => complementary?.toColor() ?? Colors.black;
+
+  /// Required [colorName], [hex], [complementary], [rgb]
   const ColorInfoWidget({
     required this.colorName,
     required this.hex,
@@ -10,18 +29,8 @@ class ColorInfoWidget extends StatelessWidget {
     super.key,
   });
 
-  final String colorName;
-  final String hex;
-  final List<int>? complementary;
-  final String rgb;
-
   @override
   Widget build(BuildContext context) {
-    final Color? color = complementary != null
-        ? Color.fromRGBO(
-            complementary![0], complementary![1], complementary![2], 1)
-        : null;
-
     return Row(
       spacing: 10,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,19 +43,19 @@ class ColorInfoWidget extends StatelessWidget {
               ColorPropertyWidget(
                 propertyName: 'Name',
                 propertyValue: colorName,
-                textColor: complementary,
+                textColor: complementary?.toColor(),
               ),
               ColorPropertyWidget(
                 propertyName: 'hex',
                 propertyValue: hex,
                 fontSize: 20,
-                textColor: complementary,
+                textColor: complementary?.toColor(),
               ),
               ColorPropertyWidget(
                 propertyName: 'rgb',
                 propertyValue: rgb,
                 fontSize: 20,
-                textColor: complementary,
+                textColor: complementary?.toColor(),
               ),
             ],
           ),
@@ -58,18 +67,18 @@ class ColorInfoWidget extends StatelessWidget {
               Text(
                 "Complementary",
                 style: TextStyle(
-                  color: color,
+                  color: complementaryColor,
                   fontSize: 10,
                 ),
               ),
-              Container(
-                height: 100,
-                width: 100,
-                color: color,
+              ColorContainerWidget(
+                color: complementaryColor,
+                complementaryColor:
+                    Color(hex.isNotEmpty ? int.parse(hex) : 0xffffff),
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

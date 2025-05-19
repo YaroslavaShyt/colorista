@@ -5,14 +5,13 @@ import 'package:colorista/presentation/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// Factory to render HomeScreen wrapped in HomeCubit
 class HomeFactory extends StatelessWidget {
-  const HomeFactory({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HomeCubit>(
       create: (_) => HomeCubit(
-        colorService: sl.get<IColorService>(),
+        colorService: sl.get<IColorsService>(),
       ),
       child: Builder(
         builder: (context) {

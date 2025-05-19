@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (_, HomeState state) {
             return AnimatedContainer(
-              padding: const EdgeInsetsDirectional.all(20),
+              padding: const EdgeInsetsDirectional.all(10),
               duration: const Duration(seconds: 1),
               curve: Curves.easeInOut,
               height: double.infinity,

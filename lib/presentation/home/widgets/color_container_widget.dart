@@ -17,9 +17,11 @@ class ColorContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double width = (MediaQuery.sizeOf(context).width / 3) - 20;
+
     return Container(
       height: 200,
-      width: 100,
+      width: width,
       color: color,
       child: Center(
         child: Text(
